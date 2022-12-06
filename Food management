@@ -1,0 +1,112 @@
+
+
+class ingredient:
+    def __init__(self, food, quantity, date, price):
+        self.food = food
+        self.quantity = quantity
+        self.date = date
+        self.price = price
+from tkinter import *
+from tkinter import messagebox
+
+window = Tk()
+window.title('Case study')
+window.configure(bg='Grey')
+list_ingredient = [] 
+
+window.geometry('600x500')
+lbl = Label(window, text="Food management", bg='silver', width=40, height=1,font=("Time New Roman", 15))
+lbl.grid(column=0, row=0, columnspan=2)
+
+food = Entry(window)
+quantity = Entry(window)
+importdate= Entry(window)
+price = Entry(window)
+check = Entry(window)
+
+def add_ingredient():
+    list_ingredient.append(ingredient(food.get(), str(quantity.get()), str(importdate.get()), str(price.get())))
+    print([item.food for item in list_ingredient])
+    messagebox.showinfo("Message", f"{food.get()} added successfully.")
+    lst_ingredient.insert(END, list_ingredient[len(list_ingredient)-1].food + '   ' + list_ingredient[len(list_ingredient)-1].quantity + '   ' + list_ingredient[len(list_ingredient)-1].importdate + '   ' + list_ingredient[len(list_ingredient)-1].price)
+    
+
+def search_ingredient():
+    search_food = check.get()
+    exist = False
+    for item in list_ingredient:
+        if item.food == search_food: 
+            exist = True 
+            messagebox.showinfo("ingredient", f"{item.food} has price VND {item.price}, with importdate: {item.importdate} and how many unit: {item.quantity} .")
+            break
+    if exist == False:
+            messagebox.showinfo("ingredient", f"{search_food} does not exist in the list.") 
+
+def delete_ingredient():
+    delete_food = check.get()
+    exist = False
+    for i in range (len(list_ingredient)):
+        if list_ingredient[i].food == delete_food:
+            exist = True
+            lst_ingredient.delete (i, last = None)
+            del list_ingredient[i]
+            messagebox.showinfo("ingredient", f"{delete_food} is deleted successfully.") 
+            break          
+    if exist == False:
+        messagebox.showinfo("ingredient", f"{delete_food} does not exist in the list.") 
+    
+def reset_ingredient():
+    food.delete(0, len(food.get()))
+    quantity.delete(0, len(quantity.get()))
+    importdate.delete(0, len(importdate.get()))
+    price.delete(0, len(price.get()))
+
+def edit_ingredient_2():
+    edit = check.get()
+    print (edit)
+    delete_ingredient()
+    add_ingredient()
+
+
+add_btn = Button(window, text="Add", bg="aqua", fg="white", command=add_ingredient)
+delete_btn = Button(window, text="Delete", bg="teal", fg="white", command=delete_ingredient)
+search_btn = Button(window, text="Search",bg="navy", fg="white", command=search_ingredient)
+reset_btn = Button(window, text="Reset", bg="#999966", fg="white", command=reset_ingredient)
+edit_btn = Button(window, text="Edit", bg="#669999", fg="white", command=edit_ingredient_2)
+
+
+food_lbl = Label(window, text="Food: ", bg='light blue', font=("Time new roman", 12), padx=10, pady=10)
+quantity_lbl = Label(window, text="Quantity: ", bg='olive', font=("Time new roman", 12), padx=10, pady=10)
+importdate_lbl = Label(window, text="Import date: ", bg='#33CC66', font=("Time new roman", 12), padx=10, pady=10)
+price_lbl = Label(window, text="Price: ", font=("Time new roman", 12), bg='#33CCFF', padx=10, pady=10)
+lst_ingredient_lbl = Label(window, text="ingredient", font=("Time new roman", 15), bg='light blue', padx=15, pady=15)
+food_lbl.grid(row=1, column=0)
+quantity_lbl.grid(row=2, column=0)
+importdate_lbl.grid(row=3, column=0)
+price_lbl.grid(row=4, column=0)
+lst_ingredient_lbl.grid(row=11, column=1)
+food.grid(row=1, column=1)
+quantity.grid(row=2, column=1)
+importdate.grid(row=3, column=1)
+price.grid(row=4, column=1)
+add_btn.grid(row=1, column=2)
+delete_btn.grid(row=2, column=2)
+reset_btn.grid(row=3, column=2)
+edit_btn.grid(row=4, column=2)
+search_btn.grid(row=6, column=1)
+check.grid(row=6, column=0)
+
+
+lst_ingredient = Listbox(window, selectmode=MULTIPLE, width=50, height=20)
+lst_ingredient_lbl.place(x= 180, y=250)
+lst_ingredient.place(x=70, y=300)
+
+window.mainloop()
+
+
+     
+
+ 
+
+
+     
